@@ -1,0 +1,23 @@
+{% extends 'base_template.html' %}
+
+{% block title %}
+Atrakcje turystyczne w Gdyni
+{% endblock %}
+{% block site_title %}
+Atrakcje turystyczne w Gdyni
+{% endblock %}
+
+{% block site_body %}
+
+
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.sidenav');
+        var instances = M.Sidenav.init(elems);
+    });
+</script>
+{% endblock %}

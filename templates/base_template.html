@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}</title>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href= "{% static 'css/materialize.css' %}" media="screen,projection"/>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-wrapper">
+              <a href="#" class="brand-logo">
+                  {% block site_title %}{% endblock %}
+              </a>
+              <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+              <ul class="right hide-on-med-and-down">
+                    <li><a href="atrakcje">Atrakcje</a></li>
+                    <li><a href="zaloguj">Zalouj</a></li>
+              </ul>
+        </div>
+    </nav>
+
+    <ul class="sidenav" id="mobile-nav">
+        <li><a href="atrakcje">Atrakcje</a></li>
+        <li><a href="zaloguj">Zalouj</a></li>
+    </ul>
+
+    {% block site_body %}
+    {% endblock %}
+
+    <script type="text/javascript" src="{% static 'js/materialize.js' %}"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.sidenav');
+            var instances = M.Sidenav.init(elems);
+        });
+    </script>`
+
+    {% block scripts %}
+    {% endblock %}
+</body>
+</html>
