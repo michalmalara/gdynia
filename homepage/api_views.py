@@ -7,9 +7,13 @@ from .serializers import AttractionSerializer, AttractionDetailSerializer
 from rest_framework import viewsets, status
 from rest_framework.views import Response
 
+
 class AttractionsAPIView(viewsets.ModelViewSet):
     queryset = Attraction.objects.all()
     serializer_class = AttractionSerializer
+
+    def retrieve(self, request, *args, **kwargs):
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class AttractionDetailAPIView(viewsets.ModelViewSet):
