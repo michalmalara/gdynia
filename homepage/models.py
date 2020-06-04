@@ -4,7 +4,7 @@ from django.db import models
 # Create your models here.
 
 class Attraction(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=100)
     image = models.ImageField()
     location = models.CharField(max_length=50)
     description = models.TextField(max_length=1000)

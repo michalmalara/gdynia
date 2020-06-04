@@ -9,4 +9,9 @@ from rest_framework import serializers
 class AttractionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Attraction
+        fields = ['id', 'name', 'location', 'image']
+
+class AttractionDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Attraction
         fields = '__all__'

@@ -14,23 +14,25 @@
 <body>
 
     <nav>
-        <div class="nav-wrapper">
-              <a href="#" class="brand-logo">
-                  {% block site_title %}{% endblock %}
-              </a>
-              <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-              <ul class="right hide-on-med-and-down">
-                    <li><a href="atrakcje">Atrakcje</a></li>
-                    <li><a href="zaloguj">Zalouj</a></li>
-              </ul>
+        <div class="nav-wrapper blue">
+            <div class="container">
+                  <a href="#" class="brand-logo">
+                      {% block site_title %}{% endblock %}
+                  </a>
+                  <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                  <ul class="right hide-on-med-and-down">
+                        <li><a href="/atrakcje">Atrakcje</a></li>
+                        <li><a href="/zaloguj">Zalouj</a></li>
+                  </ul>
+            </div>
         </div>
     </nav>
 
     <ul class="sidenav" id="mobile-nav">
-        <li><a href="atrakcje">Atrakcje</a></li>
-        <li><a href="zaloguj">Zalouj</a></li>
+        <li><a href="/atrakcje">Atrakcje</a></li>
+        <li><a href="/zaloguj">Zalouj</a></li>
     </ul>
-
+    <br><br>
     {% block site_body %}
     {% endblock %}
 
@@ -41,7 +43,7 @@
             var elems = document.querySelectorAll('.sidenav');
             var instances = M.Sidenav.init(elems);
         });
-    </script>`
+    </script>
 
     {% block scripts %}
     {% endblock %}
