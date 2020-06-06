@@ -12,18 +12,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
-
     <nav>
         <div class="nav-wrapper blue">
             <div class="container">
-                  <a href="#" class="brand-logo">
-                      {% block site_title %}{% endblock %}
-                  </a>
-                  <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-                  <ul class="right hide-on-med-and-down">
-                        <li><a href="/atrakcje">Atrakcje</a></li>
-                        <li><a href="/zaloguj">Zalouj</a></li>
-                  </ul>
+                <a href="#" class="brand-logo">
+                  {% block site_title %}{% endblock %}
+                </a>
+                <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                <ul class="right hide-on-med-and-down">
+                    {% if user.is_authenticated %}<li><a href="#">
+                        <img src="{{ user.avatar.url }}" height="30" class ="circle">
+                        </a></li>
+                    {% endif %}
+                    <li><a href="/">Atrakcje</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="/wyloguj">Wyloguj</a></li>
+                    {% else %}
+                        <li><a href="/zarejestruj">Zarejestruj się</a></li>
+                        <li><a href="/zaloguj">Zaloguj</a></li>
+                    {% endif %}
+                    {% if user.is_staff %}
+                        <li><a href="/admin">Admin</a></li>
+                    {% endif %}
+                </ul>
             </div>
         </div>
     </nav>

@@ -1,9 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.conf import settings
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
-from homepage.models import Attraction
+from rest_framework.authtoken.models import Token
+
+
 # Create your models here.
-
 class UserManager(BaseUserManager):
     def create_user(self, email, username, password=None):
         """
@@ -38,18 +42,18 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
-    email = models.EmailField(verbose_name='email', max_length=60, unique=True)
-    username = models.CharField(verbose_name='username', max_length=10, unique=True)
+    email = models.EmailField(verbose_name='Email', max_length=60, unique=True)
+    username = models.CharField(verbose_name='Nazwa użytkownika', max_length=10, unique=True)
     date_joined = models.DateField(verbose_name='date joined', auto_now_add=True)
     last_login = models.DateField(verbose_name='last login', auto_now=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
 
-    attractions_liked = models.ManyToManyField(Attraction)
+    avatar = models.ImageField(verbose_name='Awatar', default='Gdynia_herb.png')
 
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ('email',)
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ('username',)
 
     objects = UserManager()
 
@@ -61,3 +65,8 @@ class User(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)

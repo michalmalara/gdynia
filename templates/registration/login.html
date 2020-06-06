@@ -1,0 +1,32 @@
+{% extends 'base_template.html' %}
+
+{% block site_body %}
+
+<div class="container">
+    <div class="container center">
+        {% if next %}
+            Zaloguj się, aby zobaczyć zawartość:
+        {% else %}
+            Zaloguj się:
+        {% endif %}
+    </div>
+    <div class="container center">
+        {% if form.username.error or form.password.error %}
+            Proszę wprowadzić poprawny email i hasło.
+        {% endif %}
+        <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+{#            {{ form.as_p }}#}
+            <div class="input-field center">
+                {{ form.username.label_tag }}
+                {{ form.username }}
+            </div>
+            <div class="input-field">
+                {{ form.password.label_tag }}
+                {{ form.password }}
+            </div>
+            <input type="submit" class="btn" value="Zaloguj">
+        </form>
+    </div>
+</div>
+{%  endblock %}
