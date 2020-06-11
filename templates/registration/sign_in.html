@@ -1,11 +1,16 @@
 {% extends 'base_template.html' %}
 
+{% block title %}
+    Zarejestruj się
+{% endblock %}
+
+{% block site_title %}
+    Stwórz konto:
+{% endblock %}
+
 {% block site_body %}
 
 <div class="container">
-    <div class="container center">
-        <h2>Stwórz konto:</h2>
-    </div>
     <div class="container center">
         <form method="POST" action="{% url 'sign_in' %}">
             {% csrf_token %}
@@ -13,12 +18,16 @@
                 {% for error in form.username.errors %}
                     {% if  error == 'Istnieje już User z tą wartością pola Nazwa użytkownika.'%}
                         Podana nazwa użytkownika jest już zajęta.<br>
-{#                    {% else %}#}
-{#                        {{ error }}<br>#}
+                    {% else %}
+                        {{ error }}<br>
                     {% endif %}
                 {% endfor %}
                 {% for error in form.email.errors %}
-                    {{ error }}<br>
+                    {% if error == 'Istnieje już User z tą wartością pola Email.' %}
+                        Istnieje użytkownik z podanym adresem email.<br>
+                    {% else %}
+                        {{ error }}<br>
+                    {% endif %}
                 {% endfor %}
                 {% for error in form.non_field_errors %}
                     {{ error }}<br>

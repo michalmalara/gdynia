@@ -7,7 +7,7 @@ from.models import User
 # Register your models here.
 
 class UserAdminView(UserAdmin):
-    list_display = ['username', 'email', 'date_joined', 'last_login', 'is_admin', 'is_staff']
+    list_display = ['username', 'id', 'email', 'date_joined', 'last_login', 'is_admin', 'is_staff']
     search_fields = ['username', 'email']
     readonly_fields = ['date_joined', 'last_login',]
 

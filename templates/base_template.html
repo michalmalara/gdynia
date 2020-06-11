@@ -20,9 +20,14 @@
                 </a>
                 <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
-                    {% if user.is_authenticated %}<li><a href="#">
-                        <img src="{{ user.avatar.url }}" height="30" class ="circle">
-                        </a></li>
+                    {% if user.is_authenticated %}
+                        <li>
+                            <a href="/uzytkownik?id={{ user.id }}">
+                                <div style="display: flex; justify-content: center; align-items: center; height: 64px;">
+                                    <img src="{{ user.avatar.url }}" height="30" class ="circle">
+                                </div>
+                            </a>
+                        </li>
                     {% endif %}
                     <li><a href="/">Atrakcje</a></li>
                     {% if user.is_authenticated %}
@@ -40,8 +45,27 @@
     </nav>
 
     <ul class="sidenav" id="mobile-nav">
-        <li><a href="/atrakcje">Atrakcje</a></li>
-        <li><a href="/zaloguj">Zalouj</a></li>
+        {% if user.is_authenticated %}
+            <li>
+            <div class="user-view blue">
+                <a href="/uzytkownik?id={{ user.id }}">
+                    <img src="{{ user.avatar.url }}" height="30" class ="circle">
+                </a>
+                <a href="/uzytkownik?id={{ user.id }}"><span class="white-text name">{{ user.username }}</span></a>
+                <a href="/uzytkownik?id={{ user.id }}"><span class="white-text email">{{ user.email }}</span></a>
+            </div>
+            </li>
+        {% endif %}
+                    <li><a href="/">Atrakcje</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="/wyloguj">Wyloguj</a></li>
+                    {% else %}
+                        <li><a href="/zarejestruj">Zarejestruj się</a></li>
+                        <li><a href="/zaloguj">Zaloguj</a></li>
+                    {% endif %}
+                    {% if user.is_staff %}
+                        <li><a href="/admin">Admin</a></li>
+                    {% endif %}
     </ul>
     <br><br>
     {% block site_body %}

@@ -1,4 +1,7 @@
 # import models
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
+
 from .models import Attraction
 from user.models import User
 
@@ -6,7 +9,7 @@ from user.models import User
 from rest_framework import serializers
 
 
-# serializer for Attractions model
+# serializers for Attractions model
 class AttractionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Attraction
@@ -17,6 +20,12 @@ class AttractionDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Attraction
         fields = '__all__'
+
+
+class LikeUnlikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Attraction
+        fields = ['users_liked']
 
 
 # serializer for user
@@ -47,7 +56,17 @@ class RegisterUserSerializer(serializers.ModelSerializer):
 
         if password != password2:
             raise serializers.ValidationError({'password': 'Hasła muszą być takie same.'})
-        else:
-            user.set_password(password)
-            user.save()
+
+        # validate password using Djnago built-in validator
+
+        try:
+            validate_password(password=password)
+        except ValidationError as errors:
+            error_list = []
+            for error in errors:
+                error_list.append(str(error))
+            raise serializers.ValidationError({'password': error_list})
+
+        user.set_password(password)
+        user.save()
         return user

@@ -50,7 +50,7 @@ class User(AbstractBaseUser):
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
 
-    avatar = models.ImageField(verbose_name='Awatar', default='Gdynia_herb.png')
+    avatar = models.ImageField(verbose_name='Awatar', default='avatars/Gdynia_herb.png', upload_to='avatars/')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ('username',)

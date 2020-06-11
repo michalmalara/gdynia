@@ -12,18 +12,35 @@ Atrakcje turystyczne w Gdyni
 <div class="container">
     <div class="row">
         {% for object in object_list %}
-                <div class="col s12 m6 l4" >
-                    <div class="card small">
-                        <div class="card-image"><img src="{{ object.image.url }}">
-                        <span class="card-title">{{ object.name }}</span></div>
-                        <div class="card-content">
-                            <i class="material-icons tiny">thumb_up</i> Lubię to! &nbsp;&nbsp;&nbsp;
-                            <i class="material-icons tiny">share</i> Udostępnij &nbsp;&nbsp;&nbsp;
-                            <i class="material-icons tiny">location_on</i> Pokjaż na mapie
+            <div class="col s12 m6 l4" >
+                <div class="card">
+                    <div class="card-image">
+                        <div style="display: flex; justify-content: center; align-items: center; min-height: 200px;">
+                            <img class="responsive-img" src="{{ object.image.url }}">
                         </div>
-                        <div class="card-action"><a href="/atrakcja/{{ object.id }}">Szczegóły</a> </div>
+                        {% if user in object.users_liked.all %}
+                            <a class="btn-floating halfway-fab waves-effect waves-light blue tooltipped" href="/polub?id={{ object.id }}" data-position="bottom" data-tooltip="Usuń polubienie">
+                            <i class="material-icons yellow-text">star</i>
+                        {% else %}
+                            <a class="btn-floating halfway-fab waves-effect waves-light blue tooltipped" href="/polub?id={{ object.id }}" data-position="bottom" data-tooltip="Lubię to!">
+                            <i class="material-icons">star</i>
+                        {% endif %}
+                        </a>
+                    </div>
+                    <div class="card-content" style="min-height: 150px;">
+                        <span class="card-title activator grey-text text-darken-4">{{ object.name }}</span>
+                        {{ object.users_liked.all|length }}
+                        {% if object.users_liked.all|length == 0 %} osób polubiło
+                        {% elif object.users_liked.all|length == 1 %} osoba polubiła
+                        {% elif object.users_liked.all|length < 5 %} osoby polubiły
+                        {% elif object.users_liked.all|length >= 5 %} osób polubiło
+                        {% endif %}
+                    </div>
+                    <div class="card-action">
+                         <a href="/atrakcja/{{ object.id }}">Szczegóły</a>
                     </div>
                 </div>
+            </div>
         {% endfor %}
     </div>
     <div class="row">
@@ -63,6 +80,9 @@ Atrakcje turystyczne w Gdyni
 
 {% block scripts %}
 <script>
-
+ document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.tooltipped');
+    var instances = M.Tooltip.init(elems);
+  });
 </script>
 {% endblock %}

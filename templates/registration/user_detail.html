@@ -1,0 +1,23 @@
+{% extends 'base_template.html' %}
+{% block title %}
+    Panel użytkownika
+{% endblock %}
+
+{% block site_title %}
+    Panel użytkownika
+{% endblock %}
+
+{% block site_body %}
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m4">
+                <img src="{{ object.avatar.url }}" class="responsive-img circle">
+            </div>
+            <div class="col s12 m8">
+                <h1>{{ object.username }}</h1>
+                <h3>{{ object.email }}</h3>{% if user.id == object.id %}<a href="#">Edytuj<br></a>{% endif %}
+                {% if user.id == object.id %}<a href="/zmien-haslo/">Zmień hasło</a>{% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
